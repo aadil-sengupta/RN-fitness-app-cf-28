@@ -9,6 +9,8 @@ import Onboarding from './Onboarding';
 import Breathe from './Main/Mindfullness/breathe';
 import Reflect from './Main/Mindfullness/reflect';
 import LogMind from './Main/Mindfullness/logMind';
+import WorkoutScreen from './Main/WorkoutScreen';
+import WaterGoal from './Main/WaterGoal';
 const Stack = createStackNavigator();
 
 export const AuthStack = () => {
@@ -37,6 +39,10 @@ export const MainStack = () => {
           <Stack.Screen name="Breathe" component={Breathe} />
           <Stack.Screen name="Reflect" component={Reflect} />
           <Stack.Screen name="LogMind" component={LogMind} />
+
+          <Stack.Screen name="WorkoutScreen" component={WorkoutScreen} />
+          
+
         {/*<Stack.Screen name="BookView" component={BookView} /> */}
         {/* Reading End */}
       </Stack.Navigator>

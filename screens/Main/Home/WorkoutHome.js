@@ -5,13 +5,13 @@ import { StatusBar } from 'expo-status-bar';
 import { FirebaseAuth, fetchUserData } from '../../../functions/firebaseConfig';
 import { LinearGradient } from 'expo-linear-gradient';
 import WorkoutCard from '../../../components/WorkoutCards';
-
+import { useNavigation } from '@react-navigation/native';
 
 const Workout = () => {
   const [Greeting, setGreeting] = useState('Good Afternoon!')
   const uid = FirebaseAuth.currentUser.uid
   const [userData, setUserData] = useState({})
-
+  const nav = useNavigation();
 
   useEffect(() => {
     const data =  fetchUserData(uid).then((data) => {
@@ -65,7 +65,7 @@ const Workout = () => {
             <WorkoutCard text={'Outdoor Cycle'} width={'45%'} gradColors={['#50c2c2',  '#007575']} iconColor='#50c2c236'/>
             <WorkoutCard text={'Hiking'} width={'45%'} gradColors={['rgb(255, 162, 200)', 'rgb(255, 22, 193)']} iconColor='rgba(255, 162, 200, 0.45)' />
         </View>
-      <TouchableOpacity style={styles.btmBtn} >
+      <TouchableOpacity style={styles.btmBtn} onPress={() => nav.navigate('AddWorkout')} >
         <Text style={styles.btmBtnText} >Add workout manually</Text>
       </TouchableOpacity>
     </View>
@@ -107,16 +107,16 @@ const styles = StyleSheet.create({
     height: 200,
     },
     sectionTop:{
-    width: '94%',
-    marginHorizontal: '3%',
-    height: 'auto',
-    minHeight: 245,
-    paddingVertical: 20,
-    marginVertical: 20,
-    marginTop: 56,
-    paddomgBottom: 0,
-    backgroundColor: '#1c1c1e',
-    borderRadius: 10,
+      width: '94%',
+      marginHorizontal: '3%',
+      height: 'auto',
+      minHeight: 245,
+      paddingVertical: 20,
+      marginVertical: 20,
+      marginTop: 56,
+      paddomgBottom: 0,
+      backgroundColor: '#1c1c1e',
+      borderRadius: 10,
     },
     cardSec:{
         width: '100%',

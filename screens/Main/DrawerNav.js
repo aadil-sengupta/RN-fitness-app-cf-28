@@ -14,9 +14,10 @@ import { Ionicons, MaterialIcons } from 'react-native-vector-icons';
 import { FirebaseAuth } from '../../functions/firebaseConfig';
 import { BlurView } from "@react-native-community/blur";
 import { fetchUserData } from '../../functions/firebaseConfig';
-import Leaderboard from './leaderboard';
+import WaterNav from './WaterNav';
 import { MainHeader } from '../../components/misc/header';
 import About from './about';
+import AddMeal from './AddMeal';
 
 Drawer = createDrawerNavigator()
 
@@ -57,13 +58,14 @@ const DrawerNav = () => {
   nav = useNavigation();
 
   const uid = FirebaseAuth.currentUser.uid
-  const [userData, setUserData] = useState({})
+  const [userData, setUserData] = useState({FirstName: '', LastName: ''})
 
   useEffect(() => {
     fetchUserData(uid).then((data) => {
       setUserData(data)
       console.log(data, 'drawerNav')
     })
+
   }, []);
 
   return (
@@ -93,11 +95,18 @@ const DrawerNav = () => {
             <Ionicons name="home" size={size} color={focused ? '#FF0177' : '#ffffff45'} style={{marginLeft: 5}} />
           ),
         }} />
-      <Drawer.Screen name="Leaderboard" component={Leaderboard} options={{
-          headerTitle: 'Contact Us',
-          header: (props) => <MainHeader {...props} title={<Text style={{fontSize: 20}} >Leaderboard</Text> } />,
+      <Drawer.Screen name="Add Water" component={WaterNav} options={{
+          headerShown: false,
+          header: (props) => <MainHeader {...props} title={<Text style={{fontSize: 20, fontFamily: 'SFPro'}} >Add Water</Text> } />,
           drawerIcon: ({ focused, size }) => (
-            <MaterialIcons name="leaderboard" size={size} color={focused ? '#FF0177' : '#ffffff45'} style={{marginLeft: 5}} />
+            <Ionicons name="water" size={size} color={focused ? '#FF0177' : '#ffffff45'} style={{marginLeft: 5}} />
+          ),
+        }} />
+      <Drawer.Screen name="Add Meal" component={AddMeal} options={{
+          headerShown: false,
+          header: (props) => <MainHeader {...props} title={<Text style={{fontSize: 20, fontFamily: 'SFPro'}} >Add Meal</Text> } />,
+          drawerIcon: ({ focused, size }) => (
+            <Ionicons name="fast-food" size={size} color={focused ? '#FF0177' : '#ffffff45'} style={{marginLeft: 5}} />
           ),
         }} />
       <Drawer.Screen name="About" component={About} options={{

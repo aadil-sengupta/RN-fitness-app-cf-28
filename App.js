@@ -10,18 +10,18 @@ import { AuthProvider } from './functions/context/AuthContext';
 import useFonts from './functions/useFonts';
 import { onAuthStateChanged } from 'firebase/auth';
 import { FirebaseAuth } from './functions/firebaseConfig';
+import Loading from './components/Loading';
 
 const Stack = createStackNavigator();
-
-
-
-
 
 function AppContainer() {
   
   //const [isLoading, setIsLoading] = useState(true);
   const [isReady, setIsReady] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  
   const LoadFonts = async () => {
     await useFonts();
   };
@@ -53,6 +53,7 @@ function AppContainer() {
         console.log("User is signed out");
         setIsLoggedIn(false);
       }
+      setLoading(false)
     })
 
   }, [])
@@ -66,7 +67,11 @@ function AppContainer() {
     return null;
   }
 
-
+   if(loading){
+     return(
+      <Loading />
+     )
+   }
 
   return (
     <NavigationContainer onLayout={onLayoutRootView} >

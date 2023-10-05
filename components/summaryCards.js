@@ -2,12 +2,16 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import ProgressBar from './progressBar'
 
-const SummaryCard = ({color, percent, name}) => {
+const SummaryCard = ({color, percent, name, amount, unit}) => {
   return (
     <View style={styles.container} >
         <View style={styles.top} >
             <View style={[styles.iconBg, {backgroundColor: color + '40'}]}  >
 
+            </View>
+            <View style={{transform: [{translateY: 8}]}} >
+                <Text style={[styles.amount, {paddingLeft: (amount % 10 == amount) ? 10 : 0 }]}>{amount}</Text>
+                <Text style={styles.unit}>{unit}</Text>
             </View>
         </View>
         <View style={styles.btm}>
@@ -37,7 +41,7 @@ const styles = StyleSheet.create({
         height: 70,    
 
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'space-between',
         alignItems: 'center',
     },
     btm:{
@@ -64,5 +68,19 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontFamily: 'SFPro',
         marginTop: -6,
-    }
+    },
+    amount:{
+        color: 'white',
+        fontSize: 25,
+        fontFamily: 'SFPro',
+        marginTop: -10,
+    },
+    unit:{
+        color: '#808080',
+        fontSize: 16,
+        fontFamily: 'SFPro',
+        marginTop: -15,
+        textAlign: 'right',
+        paddingRight: 1.5
+    },
 })

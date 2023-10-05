@@ -9,7 +9,7 @@ import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient'
 import Meditation from './Home/Meditation'
 import Social from './social'
-import Workout from './Home/Workout'
+import WorkoutNav from './Home/WorkoutNav'
 
 const CustomTabBar = ({ state, descriptors, navigation }) => {
   return (
@@ -100,7 +100,7 @@ const TabNav = ({navigation, route}) => {
         >
         <Tab.Screen name="Summary" component={Summary} options={{ tabBarLabel: 'Summary' }} />
         <Tab.Screen name="Meditation" component={Meditation} options={{ tabBarLabel: 'Mindfullness' }} />
-        <Tab.Screen name="Workout" component={Workout} options={{ tabBarLabel: 'Workout' }} />
+        <Tab.Screen name="Workout" component={WorkoutNav} options={{ tabBarLabel: 'Workout' }} />
         {/* <Tab.Screen name="Speaking" component={SpeakingNav} options={{tabBarIcon: ({size ,color}) => <SpeakingIcon width='29' height='29' style={{marginVertical: 5}} fill={color} />}} /> */}
         {/* <Tab.Screen name="Writing" component={Writing} options={{tabBarIcon: ({size ,color}) => <WritingIcon width='29' height='29' style={{marginVertical: 5}} fill={color} />}} /> */}
       </Tab.Navigator>

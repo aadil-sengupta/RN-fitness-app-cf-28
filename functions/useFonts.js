@@ -8,5 +8,6 @@ export default useFonts = async () => {
       "Helvetica": require('../assets/fonts/Helvetica.ttf'),
       "Coolvetica": require('../assets/fonts/coolvetica.ttf'),
       "SFPro": require('../assets/fonts/sfPro.otf'),
+      "SFProThin": require('../assets/fonts/sfProThin.otf'),
     });
 };

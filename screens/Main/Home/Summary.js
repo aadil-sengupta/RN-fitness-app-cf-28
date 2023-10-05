@@ -7,7 +7,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useSteps, useCalories } from '../../../functions/fitness';
 import SummaryCard from '../../../components/summaryCards';
 import Carousel from 'react-native-snap-carousel'
-import  { ContributionGraph } from 'react-native-chart-kit'
 import GraphCard from '../../../components/graphCard';
 
 const Summary = () => {
@@ -17,11 +16,44 @@ const Summary = () => {
     const uid = FirebaseAuth.currentUser.uid
     const [userData, setUserData] = useState({})
     const steps = useSteps()
+    const [exercise, setExercise] = useState(0)
+    const [exerciseGoal, setExerciseGoal] = useState(1000)
+    const [water, setWater] = useState(0)
     const calories = steps * 0.04
 
     useEffect(() => {
       const data =  fetchUserData(uid).then((data) => {
         setUserData(data)
+
+        //Exercise Data
+        setExerciseGoal(data.exerciseGoal)
+        let exerciseData = data.workouts
+        let exerciseToday = 0
+        for (let i =0; i < exerciseData.length; i++){
+          let time = exerciseData[i].date
+          let formattedDate = new Date(time.seconds * 1000 + time.nanoseconds/1000000)
+          if (formattedDate.toDateString() == new Date().toDateString()){
+            exerciseToday = exerciseToday + exerciseData[i].time
+          }
+        }
+        //End Exercise Data
+
+        //Water Data
+        let waterConsumedData = data.waterConsumed
+        let waterConsumedToday = 0
+        for (let i = 0; i < waterConsumedData.length; i++){
+  
+          let time = waterConsumedData[i].date
+          let formattedDate = new Date(time.seconds * 1000 + time.nanoseconds/1000000)
+          if (formattedDate.toDateString() == new Date().toDateString()){
+            waterConsumedToday += waterConsumedData[i].amount
+          }
+        }
+        setWater(waterConsumedToday)
+        //End Water Data
+
+        console.log(exerciseToday, 'ExerciseToday')
+        setExercise(Math.floor(exerciseToday/60))
         console.log(data)
         var myDate = new Date();
         var hrs = myDate.getHours();
@@ -68,12 +100,12 @@ const Summary = () => {
 
       <View style={styles.cardsWrap} >
         <View style={styles.cardsRow}>
-          <SummaryCard color={'#FF0177'} percent={'84'} name={'Steps'} />
-          <SummaryCard color={'#6542F4'} percent={'90'} name={'Calories'} />
+          <SummaryCard color={'#FF0177'} percent={'84'} name={'Steps'} amount={2300} unit={''} />
+          <SummaryCard color={'#6542F4'} percent={'90'} name={'Calories'} amount={458} unit={'kcals'} />
         </View>
         <View style={styles.cardsRow}>
-          <SummaryCard color={'#A5FF01'} percent={'36'} name={'Exercise'} />
-          <SummaryCard color={'#00D1FF'} percent={'67'} name={'Water'} />
+          <SummaryCard color={'#A5FF01'} percent={'36'} name={'Exercise'} amount={exercise} unit={'min'} />
+          <SummaryCard color={'#00D1FF'} percent={'67'} name={'Water'} amount={water} unit={'mL'} />
         </View>
       </View>
       

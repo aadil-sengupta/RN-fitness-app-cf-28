@@ -2,13 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Animated, StyleSheet, View, TouchableHighlight, Easing } from 'react-native';
 import GradientText from './gradientText';
 import Svg, { Path } from 'react-native-svg';
+import { useNavigation } from '@react-navigation/native';
 
 const AnimatedTouchable = Animated.createAnimatedComponent(TouchableHighlight);
 
 const WorkoutCard = ({ width, text, height = '100%', gradColors, iconColor }) => {
   const [isPressed, setIsPressed] = useState(false);
   const scaleValue = useRef(new Animated.Value(1)).current;
-
+  const nav = useNavigation();
   useEffect(() => {
 
     }, [isPressed]);
@@ -21,6 +22,7 @@ const WorkoutCard = ({ width, text, height = '100%', gradColors, iconColor }) =>
         useNativeDriver: true,
       }).start();
       setIsPressed(true);
+    
   };
   const handlePressOut = () => {
     Animated.timing(scaleValue, {
@@ -46,6 +48,7 @@ const WorkoutCard = ({ width, text, height = '100%', gradColors, iconColor }) =>
       ]}
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
+      onPress={() => nav.navigate('WorkoutScreen', {name: text})}
     >
       <View>
         <View style={[styles.iconWrap, { backgroundColor: iconColor }]}></View>
