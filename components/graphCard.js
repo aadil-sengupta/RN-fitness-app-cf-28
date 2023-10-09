@@ -2,10 +2,10 @@ import { StyleSheet, Text, View, Dimensions } from 'react-native'
 import React from 'react'
 import { ProgressChart } from 'react-native-chart-kit'
 
-const GraphCard = ({style}) => {
+const GraphCard = ({style, graphData=[0.6, 0.8, 0.4, 0.5]}) => {
     const data = {
         labels: ["Water","Calories", "Exercise","Steps"], // Labels for the data points
-        data: [0.6, 0.8, 0.4, 0.5] // Mock data (60%, 80%, 40%, and 50%)
+        data: graphData // Mock data (60%, 80%, 40%, and 50%)
       };
     const colorsArray = ['#00D1FF','#6542F4', '#A5FF01','#FF0177'];
 

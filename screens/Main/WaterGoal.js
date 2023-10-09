@@ -1,10 +1,22 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React,{useState} from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { useNavigation } from '@react-navigation/native'
+import { updateUserData, FirebaseAuth } from '../../functions/firebaseConfig'
 
 const WaterGoal = () => {
     const nav = useNavigation()
+    const [newGoal, setNewGoal] = useState(0)
+    const uid = FirebaseAuth.currentUser.uid
+    const updateGoal = () => {
+      NewData = {
+        waterGoal: newGoal
+      }
+      updateUserData(uid, NewData).then(() => {
+        nav.goBack()
+        })
+    }
+
   return (
     <View style={styles.container} >
         <View style={styles.header} >
@@ -13,13 +25,13 @@ const WaterGoal = () => {
             </TouchableOpacity>
 
         </View>
-            <Text style={styles.headerText} >Set your daily goal</Text>
+            <Text style={styles.headerText} >Set your daily water goal</Text>
             <View style={styles.textInputWrap} >
                 {/* <Text style={styles.textLabel} >Weight:</Text> */}
-                <TextInput style={[styles.textInput, {color: '#00D1FF'}]} onChangeText={(value) => setWeight(value)} cursorColor={'white'} inputMode='numeric' />
-                <Text style={styles.textInputUnit} >mL</Text>
+                <TextInput style={[styles.textInput, {color: '#026ed4'}]} onChangeText={(value) => setNewGoal(parseInt(value))} cursorColor={'white'} inputMode='numeric' />
+                <Text style={styles.textInputUnit} >mL / day</Text>
             </View>
-            <TouchableOpacity style={{backgroundColor: '#00D1FF', marginHorizontal: '30%', paddingVertical: 5}} >
+            <TouchableOpacity style={{backgroundColor: '#026ed4', marginHorizontal: '30%', paddingVertical: 5}} onPress={updateGoal} >
                 <Text style={{fontFamily: 'SFPro', color: 'white', fontSize: 21, textAlign: 'center'}} >Set Goal</Text>
             </TouchableOpacity>
     </View>
@@ -42,7 +54,7 @@ const styles = StyleSheet.create({
         height: 50,
         backgroundColor: '#00000060',
         borderRadius: 10,
-        borderColor: '#00D1FF',
+        borderColor: '#026ed4',
         borderStyle: 'solid',
         borderWidth: 2,
         marginVertical: 15,

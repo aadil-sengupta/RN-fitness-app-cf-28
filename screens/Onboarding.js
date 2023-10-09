@@ -17,6 +17,11 @@ const Onboarding = () => {
     const [Weight, setWeight] = useState('');
     const [Height, setHeight] = useState('');
     const [Gender, setGender] = useState('');
+    const [workoutGoal,setWorkoutGoal] = useState('');
+    const [waterGoal,setWaterGoal] = useState('');
+    const [stepsGoal,setStepsGoal] = useState('');
+    const [weightGoal, setWeightGoal] = useState('');
+
     const [Loading, setLoading] = useState(false);
 
     const Scroll = useRef()
@@ -46,7 +51,10 @@ const Onboarding = () => {
         let data = {
           weight: Weight,
           height: Height,
-          gender: Gender
+          gender: Gender,
+          workoutGoal: workoutGoal,
+          waterGoal: waterGoal,
+          stepsGoal: stepsGoal,
         }
         updateUserData(user.uid, data)
     } catch (e){
@@ -130,8 +138,38 @@ const Onboarding = () => {
       <View style={[{ height: '100%', width}, styles.slide]}>
         <View style={[styles.slideContainer]}>
         <View style={{height: '100%'}} >
-            <ScrollView >
-        <Text style={[styles.QuesText, {marginTop: 55, width: '100%', textAlign: 'center', fontSize: 66, lineHeight: 69}]}>Set your <Text style={{color: '#FFF500'}} >goals.</Text></Text>
+            <ScrollView style={{height:'100%'}} contentContainerStyle={[styles.slideContainer,{ height: 'auto', paddingVertical: 50, paddingTop: 40}]} >
+        <Text style={[styles.QuesText, {marginTop: -10, width: '100%', textAlign: 'center', fontSize: 66, lineHeight: 69}]}>Set your <Text style={{color: '#FFF500'}} >goals.</Text></Text>
+        <View style={{width: '85%'}}>
+            <View style={[styles.textInputWrap,{borderColor: '#A5FF01'}]} >
+                <Text style={[styles.textLabel,{color: '#A5FF01', width: 103 }]} >Workout:</Text>
+                <TextInput style={[styles.textInput, {color: '#A5FF01',}]} onChangeText={(value) => setWorkoutGoal(value)} cursorColor={'white'} inputMode='numeric' />
+                <Text style={styles.textInputUnit}>min/day</Text>
+            </View>
+            <View style={[styles.textInputWrap, {borderColor: '#026ed4'}]} >
+                <Text style={[styles.textLabel, {color: '#026ed4'}]} >Water:</Text>
+                <TextInput style={[styles.textInput, {color: '#026ed4',}]} onChangeText={(value) => setWaterGoal(value)} cursorColor={'white'} inputMode='numeric' />
+                <Text style={styles.textInputUnit} >mL/day</Text>
+            </View>
+            <View style={[styles.textInputWrap, {borderColor: '#FF0177'}]} >
+                <Text style={[styles.textLabel, {color: '#FF0177'}]} >Steps:</Text>
+                <TextInput style={[styles.textInput, {color: '#FF0177',}]} onChangeText={(value) => setStepsGoal(value)} cursorColor={'white'} inputMode='numeric' />
+                <Text style={styles.textInputUnit} >/day</Text>
+            </View>
+            <View style={[styles.textInputWrap, {borderColor: '#026ed4'}]} >
+                <Text style={[styles.textLabel, {color: '#026ed4', width: 139}]} >Mindfullness:</Text>
+                <TextInput style={[styles.textInput, {color: '#026ed4',}]} onChangeText={(value) => setWaterGoal(value)} cursorColor={'white'} inputMode='numeric' />
+                <Text style={styles.textInputUnit} >mins/day</Text>
+            </View>
+            <View style={[styles.textInputWrap,{borderColor: '#6542F4'}]} >
+                <Text style={[styles.textLabel,{color: '#6542F4', width: 107 }]} >Focus on:</Text>
+                <Picker style={[styles.textInput, {borderRadius:12, overflow: 'hidden', transform: [{translateY: -5}], padding: 0, color: '#6542F4', width: '100%'}]}  selectedValue={weightGoal} onValueChange={(value)=>setWeightGoal(value)} mode='dropdown' prompt='Gender' >
+                    <Picker.Item  label="Gaining Weight" value="male" />
+                    <Picker.Item label="Losing Weight" value="female"/>
+                    <Picker.Item label="Prefer not to say" value="none"/>
+                </Picker>
+            </View>
+        </View>
 
             </ScrollView>
             </View>

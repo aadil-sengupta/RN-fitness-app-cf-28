@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "fitness-cf-28",
+    "name": "HoloFit",
     "slug": "fitness-cf-28",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -11,7 +11,10 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "permissions": ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"],
+    "permissions": [
+      "ACCESS_FINE_LOCATION",
+      "ACCESS_COARSE_LOCATION"
+    ],
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -19,15 +22,27 @@
       "supportsTablet": true
     },
     "android": {
+      "config":{
+        "googleMaps":{
+          "apiKey": "AIzaSyDyYnxTL6C9vE1jcGMHTmCNB28I7Jti1Lo"
+        }
+      },
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": ["ACTIVITY_RECOGNITION"],
+      "permissions": [
+        "ACTIVITY_RECOGNITION"
+      ],
       "package": "com.phantomzneurox.fitnesscf28"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "8bbb3d17-5df2-4d97-b13e-a38ab1478326"
+      }
     }
   }
 }

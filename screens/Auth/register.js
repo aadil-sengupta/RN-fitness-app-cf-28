@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, Keyboard } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Keyboard, ActivityIndicator } from 'react-native'
 import React,{useState,useEffect, useRef} from 'react'
 import Background from '../../components/background'
 import { Input, Button } from '@rneui/themed'
@@ -70,10 +70,22 @@ const RegisterScreen = () => {
           LastName: nameSplit.slice(1).join(' '),
           birthday: date,
           email: email,
+          waterGoal: 3000,
+          waterConsumed: [],
+          mealGoal: 170,
+          mealConsumed: [],
+          workouts: [],
+          workoutGoal: 30,
+          mindGoal: 10,
+          breathe: [],
+          reflect: [],
+          logMind: [],
+          friendRequests: [],
+          friends: [],
         }
-
+        setLoading(false)
         createUserData(user.uid, data)
-
+        
         nav.navigate('Onboarding')
       })
       .catch((error) => {
@@ -81,13 +93,14 @@ const RegisterScreen = () => {
         const errorMessage = error.message;
         console.log(error)
         setError(error.message.slice(10))
+        setLoading(false)
         // ..
       });
     } catch (e){
       console.log(e)
-
-    } finally {
       setLoading(false)
+    } finally {
+      
     }
   }
 
@@ -145,9 +158,12 @@ const RegisterScreen = () => {
           />
 
         </View>
-        <TouchableOpacity onPress={() => register()}  style={{ borderColor: '#6542F4', borderWidth: 1, borderRadius: 7, width: '54%', height: 45, justifyContent: 'center', backgroundColor: '#6542F4'}}  >
-                <Text style={{color: '#fff', fontSize: 22, textAlign: 'center', width: '100%'}}> Register </Text>
-        </TouchableOpacity>
+        <TouchableOpacity onPress={() => register()}  style={{ borderColor: loading ? '#808080' : '#000', borderWidth: 1, backgroundColor: loading ? '#808080' : '#6542F4', borderRadius: 7, width: '54%', height: 45, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', }}  >
+        { loading ? (
+                  <ActivityIndicator color="#fff" />
+                ) : (<></>) }
+                <Text style={{color: '#fff', fontSize: 22, textAlign: 'center'}}> Register </Text>
+              </TouchableOpacity>
 
         <TouchableOpacity onPress={() => handleBack()}  style={{ marginTop: 15, borderColor: '#6542F4', borderWidth: 2, backgroundColor: '#000', borderRadius: 7, width: '54%', height: 45, justifyContent: 'center'}}  >
                 <Text style={{color: '#6542F4', fontSize: 22, textAlign: 'center', width: '100%'}}> Back </Text>

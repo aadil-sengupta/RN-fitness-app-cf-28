@@ -6,6 +6,8 @@ import WaterCard from '../../components/waterCard'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native'
 import { fetchUserData, FirebaseAuth, updateUserData } from '../../functions/firebaseConfig'
+import Loading from '../../components/Loading'
+import { Alert } from 'react-native'
 
 const AddWater = () => {
   const nav = useNavigation()
@@ -14,6 +16,7 @@ const AddWater = () => {
   const [waterConsumed, setWaterConsumed] = useState(0)
   const [waterGoal, setWaterGoal] = useState(2500)
   const [waterPercentGraphArray, setWaterPercentGraphArray] = useState([0])
+  const [loading, setLoading] = useState(true)
   const uid = FirebaseAuth.currentUser.uid
 
   useEffect(() => {
@@ -22,6 +25,7 @@ const AddWater = () => {
       setWaterGoal(data.waterGoal)
       let waterConsumedData = data.waterConsumed
       let waterConsumedToday = 0
+      try{
       for (let i = 0; i < waterConsumedData.length; i++){
 
         let time = waterConsumedData[i].date
@@ -30,6 +34,7 @@ const AddWater = () => {
           waterConsumedToday += waterConsumedData[i].amount
         }
       }
+    } catch{}
       setWaterConsumed(waterConsumedToday)
       percent = Math.floor(waterConsumedToday*100/data.waterGoal)
       setWaterPercent(percent)
@@ -39,7 +44,9 @@ const AddWater = () => {
         percent = percent/100
       }
       setWaterPercentGraphArray([percent])
+      setLoading(false)
     });
+
     }, [])
 
     const AddWaterFunc = (amount) => {
@@ -67,6 +74,14 @@ const AddWater = () => {
         setWaterPercentGraphArray([NewWaterPercent])
         console.log([NewWaterPercent])
 
+    }
+
+
+
+    if (loading) {
+      return (
+        <Loading />
+      )
     }
 
   return (
@@ -122,7 +137,7 @@ const AddWater = () => {
               <View style={{flexDirection: 'row', height: 100, marginTop: 10 }}>
               <TouchableOpacity style={styles.WaterCardWrap} onPress={() => AddWaterFunc(750)} ><WaterCard amount={750} /></TouchableOpacity>
               <TouchableOpacity style={styles.WaterCardWrap} onPress={() => AddWaterFunc(1000)} ><WaterCard amount={1000} /></TouchableOpacity>
-              <TouchableOpacity style={styles.WaterCardWrap} onPress={() => AddWaterFunc(1000)} ><WaterCard amount={'Other'} /></TouchableOpacity>
+              <TouchableOpacity style={styles.WaterCardWrap} onPress={() => nav.navigate('AddWaterCustom', {addWater: AddWaterFunc})} ><WaterCard amount={'Other'} /></TouchableOpacity>
               </View>
             </View>
       </View>

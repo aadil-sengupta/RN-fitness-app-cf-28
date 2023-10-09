@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         height: 8,
         borderRadius: 10,
+        overflow: 'hidden'
     },
     bar:{
         

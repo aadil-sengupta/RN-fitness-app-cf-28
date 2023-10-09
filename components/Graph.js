@@ -47,7 +47,7 @@ const MindLineChart = ({ data }) => {
     let data2 = reflectFreq
     let data3 = logFreq
 
-    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const days = [ 'Sat','Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
     const rotatedDays = [...days.slice(today), ...days.slice(0, today)];
   
     const Gradient1 = () => (

@@ -1,4 +1,4 @@
-import { Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, View, Platform, TouchableOpacity, Button, TouchableHighlight } from 'react-native';
+import { Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, View, Platform, TouchableOpacity, Button, TouchableHighlight, Image } from 'react-native';
 import React from 'react';
 //import { Button } from '@rneui/themed';
 import { useState, useRef } from 'react';
@@ -46,7 +46,7 @@ const Welcome = () => {
         > 
               <StatusBar style="light" />
           <View style={{ width, height: '100%', alignItems: 'center' }}>
-          <Text style={[styles.btmText, {width: '95%', marginTop: 320, fontSize: 85}]}><Text style={{color: '#FFF500'}} >Holo</Text><Text style={{color: '#FF0177'}} >Fit<Text style={{color: '#6542F4'}} >!</Text></Text></Text>
+          <Text style={[styles.btmText, {width: '95%', marginTop: 320, fontSize: 80}]}><Text style={{color: '#FFF500'}} >Holo</Text><Text style={{color: '#FF0177'}} >Fit<Text style={{color: '#6542F4'}} >!</Text></Text></Text>
            <LinearGradient
               colors={['#6542F460', 'transparent']}
               style={styles.linearGradient}
@@ -56,25 +56,69 @@ const Welcome = () => {
           </LinearGradient>
           </View>
           <View style={[{ height: '100%', width}, styles.slide]}>
-            <Text style={styles.btmText} > </Text>
-          </View>
-
-          <View style={{ width, height }}>
-            <View style={styles.wrapper}>
-              <Text style={styles.header}>Top Notch Artists</Text>
-              <Text style={styles.paragraph}>... all in one place</Text>
+          <LinearGradient
+              colors={['#FF503460', 'transparent']}
+              style={styles.linearGradient}
+              start={[0.5, 0]}
+              end={[0.5, 1]}
+            >
+          </LinearGradient>
+          <View style={styles.wrapper}>
+            <Image style={[styles.creative, {width: '94%'}]}  source={require('../../assets/welc-walk.png')} />
+              <Text style={[styles.header, {marginTop: 24}]}>Keep track of workouts!</Text>
             </View>
           </View>
 
           <View style={{ width, height }}>
+            <LinearGradient
+                colors={['#04d6d650', 'transparent']}
+                style={styles.linearGradient}
+                start={[0.5, 0]}
+                end={[0.5, 1]}
+              >
+            </LinearGradient>
             <View style={styles.wrapper}>
-              <Text style={styles.header}>Top Notch Artists</Text>
-              <Text style={styles.paragraph}>... all in one place</Text>
+              <Image style={styles.creative}  source={require('../../assets/welc-mind.png')} />
+              <Text style={styles.header}>Mindfullness</Text>
+            </View>
+          </View>
+
+          <View style={{ width, height }}>
+          <LinearGradient
+                colors={['#ff6bbf50', 'transparent']}
+                style={styles.linearGradient}
+                start={[0.5, 0]}
+                end={[0.5, 1]}
+              >
+            </LinearGradient>
+            <View style={styles.wrapper}>
+            <Image style={[styles.creative, {width: '94%'}]}  source={require('../../assets/welc-social.png')} />
+              <Text style={[styles.header, {marginTop: 24}]}>Socialize!</Text>
+            </View>
+          </View>
+          <View style={{ width, height }}>
+          <LinearGradient
+                colors={['#9A92E350', 'transparent']}
+                style={styles.linearGradient}
+                start={[0.5, 0]}
+                end={[0.5, 1]}
+              >
+            </LinearGradient>
+            <View style={styles.wrapper}>
+            <Image style={[styles.creative, {width: '88%'}]}  source={require('../../assets/welc-drink.png')} />
+              <Text style={[styles.header, {marginTop: 48}]}>Track hydration levels!</Text>
             </View>
           </View>
 
           <View style={{ width, height: '100%', justifyContent: 'space-between', alignItems:'center'}}>
-          <Text style={[styles.btmText, {width: '90%', marginTop: 240, fontSize: 100}]}><Text style={{color: '#FFF500'}} >Holo</Text><Text style={{color: '#FF0177'}} >Fit<Text style={{color: '#6542F4'}} >!</Text></Text></Text>
+          <LinearGradient
+              colors={['#6542F460', 'transparent']}
+              style={styles.linearGradient}
+              start={[0.5, 0]}
+              end={[0.5, 1]}
+            >
+          </LinearGradient>
+          <Text style={[styles.btmText, {width: '97%', marginTop: 240, fontSize: 90}]}><Text style={{color: '#FFF500'}} >Holo</Text><Text style={{color: '#FF0177'}} >Fit<Text style={{color: '#6542F4'}} >!</Text></Text></Text>
           <TouchableHighlight onPress={() => {nav.navigate('Register');}}  style={styles.btnEnd}>
               <Text style={styles.btnEndText}> Get Started! </Text>
           </TouchableHighlight>
@@ -83,7 +127,7 @@ const Welcome = () => {
         </ScrollView>
         <View style={{flex: 0.3}}>
         <View style={styles.paginationWrapper}>
-          {Array.from(Array(5).keys()).map((key, index) => (
+          {Array.from(Array(6).keys()).map((key, index) => (
             <View style={[styles.paginationDots, { opacity: pageIndex === index ? 1 : 0.2 }]} key={index} />
           ))}
         </View>
@@ -105,8 +149,10 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 30,
-    fontWeight: 'bold',
+    fontFamily: 'SFPro',
     marginBottom: 20,
+    color: '#fff',
+    marginTop: -20
   },
   paragraph: {
     fontSize: 17,
@@ -164,6 +210,12 @@ linearGradient: {
     top: 0,
     height: 200,  // You can adjust the height as per your needs
   },
+  creative:{
+    height: null,
+    width: '105%',
+    marginTop: 115,
+    aspectRatio: 1
+  }
 });
 
 export default Welcome;

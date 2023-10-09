@@ -18,15 +18,15 @@ const LoginScreen = () => {
   const [error, setError] = useState('');
   
   let login = () =>{
-    setLoading(true)
-
+  
     try{
+      setLoading(true)
       signInWithEmailAndPassword(FirebaseAuth, email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
         console.log(user)
-
+        setLoading(false)
 
         // ...
       })
@@ -35,13 +35,14 @@ const LoginScreen = () => {
         const errorMessage = error.message;
         console.log(error)
         setError(error.message.slice(10))
+        setLoading(false)
         // ..
       });
     } catch (e){
       console.log(e)
-
-    } finally {
       setLoading(false)
+    } finally {
+      
     }
   }
 
@@ -89,8 +90,8 @@ const LoginScreen = () => {
           />
         </View>
 
-        <TouchableOpacity onPress={login}  style={{ borderColor: !isLoading ? '#808080' : '#000', borderWidth: 1, backgroundColor: !isLoading ? '#808080' : '#6542F4', borderRadius: 7, width: '54%', height: 45, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', }}  >
-                { !isLoading ? (
+        <TouchableOpacity onPress={login}  style={{ borderColor: loading ? '#808080' : '#000', borderWidth: 1, backgroundColor: loading ? '#808080' : '#6542F4', borderRadius: 7, width: '54%', height: 45, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', }}  >
+                { loading ? (
                   <ActivityIndicator color="#fff" />
                 ) : (<></>) }
                 <Text style={{color: '#fff', fontSize: 22, textAlign: 'center'}}> Login </Text>

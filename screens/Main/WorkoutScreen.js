@@ -100,7 +100,7 @@ export default function WorkoutScreen({route, navigation}) {
                     </View>
                     <View style={styles.card2Btm}>
                         <Text style={{fontFamily: 'SFPro', fontSize: 34, color: 'white', height: '100%', textAlignVertical: 'center', marginLeft: 15, marginTop: 5}} >0.00</Text>
-                        <Text style={{fontFamily: 'SFPro', fontSize: 22, color: '#808080', height: '100%', textAlignVertical: 'bottom', marginLeft: 4, marginTop: 2}} >m</Text>
+                        <Text style={{fontFamily: 'SFPro', fontSize: 22, color: '#808080', height: '100%', textAlignVertical: 'bottom', marginLeft: 4, marginTop: 2}} >km</Text>
                     </View>
                 </View>
             </View>

@@ -9,11 +9,14 @@ import MaterialComunityIcons from 'react-native-vector-icons/MaterialCommunityIc
 import { Shadow } from 'react-native-shadow-2';
 import { useNavigation } from '@react-navigation/native';
 import MindLineChart from '../../../components/Graph.js';
+import Loading from '../../../components/Loading';
 
 const Meditation = () => {
   const [Greeting, setGreeting] = useState('Good Afternoon!')
   const uid = FirebaseAuth.currentUser.uid
   const [userData, setUserData] = useState({})
+  const [loading, setLoading] = useState(true)
+  const [graphData, setGraphData] = useState([[],[],[]])
 
   const pageRef1 = useRef();
   const pageRef2 = useRef();
@@ -52,6 +55,21 @@ const Meditation = () => {
   useEffect(() => {
     const data =  fetchUserData(uid).then((data) => {
       setUserData(data)
+      try{
+        breatheArray =[]
+        for (let i = 0; i < data.breathe.length; i++){
+          breatheArray.push(data.breathe[i].toDate())
+        }
+        reflectArray = []
+        for (let i = 0; i < data.reflect.length; i++){
+          reflectArray.push(data.reflect[i].toDate())
+        }
+        logArray = []
+        for (let i = 0; i < data.logMind.length; i++){
+          logArray.push(data.logMind[i].toDate())
+        }
+        setGraphData([breatheArray,reflectArray,logArray])
+      }catch{}
       console.log(data)
       var myDate = new Date();
       var hrs = myDate.getHours();
@@ -64,15 +82,20 @@ const Meditation = () => {
         greet = 'Good Evening';
       setGreeting(greet + ' ' + data.FirstName + '!');
     })
+
+    setLoading(false)
   }, []);
 
-  const exampleInput = [
-  [new Date('2023-09-29'), new Date('2023-09-30'), new Date('2023-09-20')],
-  [new Date('2023-09-30'), new Date('2023-09-29')],
-  [new Date('2023-09-29'), new Date('2023-09-26')],
-];
 
   const nav = useNavigation();
+
+  if (loading) {
+    return (
+      <Loading />
+    )
+  }
+
+
   return (
     
   <ScrollView contentContainerStyle={styles.container} >    
@@ -120,12 +143,30 @@ const Meditation = () => {
     </View>
     <Text style={[styles.headerText, {marginTop: 0, fontWeight: 'normal'}]} >Activity</Text>
     <View style={styles.graphWrap} >
+      <View style={{width: '100%', height: 25, justifyContent: 'space-evenly', alignItems: 'center', flexDirection: 'row', marginTop: -5, marginBottom: 15}}>
+
+        <View style={{flexDirection: 'row', height: '100%', alignItems: 'center'}} >
+          <View style={{borderRadius: 50, backgroundColor: '#ff6900', width: 15, height: 15, marginRight: 10}} />
+          <Text style={{color: '#fff', fontSize: 15}} >Breathe</Text>
+        </View>
+
+        <View style={{flexDirection: 'row', height: '100%', alignItems: 'center'}} >
+          <View style={{borderRadius: 50, backgroundColor: '#0000ff', width: 15, height: 15, marginRight: 10}} />
+          <Text style={{color: '#fff', fontSize: 15}} >Reflect</Text>
+        </View>
+
+        <View style={{flexDirection: 'row', height: '100%', alignItems: 'center'}} >
+          <View style={{borderRadius: 50, backgroundColor: '#00fc08', width: 15, height: 15, marginRight: 10}} />
+          <Text style={{color: '#fff', fontSize: 15}} >Mood</Text>
+        </View>
+
+      </View>
     <View style={styles.buttonGroupWrap}>
     <TouchableOpacity onPress={handleBack} ref={buttonRef1} style={[styles.buttonContainer, {backgroundColor: '#6a696f'}]} ><Text style={styles.buttonText}>7 Days</Text></TouchableOpacity>
     <TouchableOpacity onPress={handleNext} ref={buttonRef2} style={styles.buttonContainer} ><Text style={styles.buttonText} >30 Days</Text></TouchableOpacity>
     </View>
       <View ref={pageRef1}>
-        <MindLineChart  data={exampleInput}  />
+        <MindLineChart  data={graphData}  />
       </View>
       <View ref={pageRef2} style={{display: 'none', justifyContent: 'center', alignItems: 'center'}} >
           <Text style={{color: 'white', fontWeight: 'bold', fontFamily: 'Helvetica', fontSize: 18, position: 'absolute', paddingBottom: 45}} >No data available</Text>
@@ -133,7 +174,7 @@ const Meditation = () => {
       </View>
     </View>
 
-    <Text style={[styles.headerText, {marginTop: 8, fontWeight: 'normal'}]} >Mood</Text>
+    {/* <Text style={[styles.headerText, {marginTop: 8, fontWeight: 'normal'}]} >Mood</Text>
     <View style={styles.graphWrap} >
     <View style={styles.buttonGroupWrap}>
     <TouchableOpacity onPress={handleBack4} ref={buttonRef3} style={[styles.buttonContainer, {backgroundColor: '#6a696f'}]} ><Text style={styles.buttonText}>7 Days</Text></TouchableOpacity>
@@ -146,7 +187,7 @@ const Meditation = () => {
           <Text style={{color: 'white', fontWeight: 'bold', fontFamily: 'Helvetica', fontSize: 18, position: 'absolute', paddingBottom: 45}} >No data available</Text>
           <MindLineChart  data={[[],[],[]]}  />
       </View>
-    </View>
+    </View> */}
   
   </ScrollView>
 

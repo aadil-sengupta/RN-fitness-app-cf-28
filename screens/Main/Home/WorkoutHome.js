@@ -6,17 +6,22 @@ import { FirebaseAuth, fetchUserData } from '../../../functions/firebaseConfig';
 import { LinearGradient } from 'expo-linear-gradient';
 import WorkoutCard from '../../../components/WorkoutCards';
 import { useNavigation } from '@react-navigation/native';
+import Loading from '../../../components/Loading';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Workout = () => {
   const [Greeting, setGreeting] = useState('Good Afternoon!')
   const uid = FirebaseAuth.currentUser.uid
   const [userData, setUserData] = useState({})
   const nav = useNavigation();
+  const [loading, setLoading] = useState(true)
+  const [workoutGoal, setWorkoutGoal] = useState(30)
 
   useEffect(() => {
     const data =  fetchUserData(uid).then((data) => {
       setUserData(data)
       console.log(data)
+      setWorkoutGoal(data.workoutGoal)
       var myDate = new Date();
       var hrs = myDate.getHours();
       var greet;
@@ -27,9 +32,17 @@ const Workout = () => {
       else if (hrs >= 17 && hrs <= 24)
         greet = 'Good Evening';
       setGreeting(greet + ' ' + data.FirstName + '!');
+
+      setLoading(false)
+      
     })
   }, []);
 
+  if (loading) {
+    return (
+      <Loading />
+    )
+  }
 
   return (
   <ScrollView contentContainerStyle={styles.container} >
@@ -43,11 +56,11 @@ const Workout = () => {
   <StatusBar style="light" />
   <MainHeader title={''} />
     <Text style={[styles.textHeader, {marginTop: 20}]} >{Greeting}</Text>
-    <Text style={styles.textHeader2}>Here's info about your last workout.</Text>
-    <View style={styles.sectionTop}>
+    <Text style={styles.textHeader2}>Start a new workout!</Text>
+    {/* <View style={styles.sectionTop}>
 
     </View>
-    <Text style={[styles.textHeader, {marginTop: 10}]}>Start a new workout!</Text>
+    <Text style={[styles.textHeader, {marginTop: 10}]}>Start a new workout!</Text> */}
     <View style={styles.cardSec}>
         <View style={styles.cardRow}>
             <WorkoutCard text={'Outdoor Walk'} width={'45%'} gradColors={['rgb(255, 50, 10)', 'rgb(255, 98, 140)']} iconColor='rgba(255, 50, 10, 0.4)' />
@@ -65,8 +78,13 @@ const Workout = () => {
             <WorkoutCard text={'Outdoor Cycle'} width={'45%'} gradColors={['#50c2c2',  '#007575']} iconColor='#50c2c236'/>
             <WorkoutCard text={'Hiking'} width={'45%'} gradColors={['rgb(255, 162, 200)', 'rgb(255, 22, 193)']} iconColor='rgba(255, 162, 200, 0.45)' />
         </View>
-      <TouchableOpacity style={styles.btmBtn} onPress={() => nav.navigate('AddWorkout')} >
+      <TouchableOpacity style={styles.btmBtn} onPress={() => nav.navigate('AddWorkout', {userData: userData})} >
         <Text style={styles.btmBtnText} >Add workout manually</Text>
+        <Ionicons name='chevron-forward' style={{color: 'white', fontSize: 22}} />
+      </TouchableOpacity>
+      <TouchableOpacity style={[styles.btmBtn]} onPress={() => nav.navigate('WorkoutGoal', {set: setWorkoutGoal})} >
+        <Text style={styles.btmBtnText} >Current Workout Goal: {workoutGoal} min/day</Text>
+        <Ionicons name='chevron-forward' style={{color: 'white', fontSize: 22}} />
       </TouchableOpacity>
     </View>
 
@@ -135,9 +153,11 @@ const styles = StyleSheet.create({
         height: 50,
         backgroundColor: '#1c1c1e',
         borderRadius: 10,
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
         marginTop: 10,
+        flexDirection: 'row',
+        paddingHorizontal: 16
     },
     btmBtnText:{
         color: '#fff',

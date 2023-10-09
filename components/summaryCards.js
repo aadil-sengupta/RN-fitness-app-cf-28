@@ -1,13 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import ProgressBar from './progressBar'
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const SummaryCard = ({color, percent, name, amount, unit}) => {
+const SummaryCard = ({color, percent, name, amount, unit, icon='flame'}) => {
   return (
     <View style={styles.container} >
         <View style={styles.top} >
-            <View style={[styles.iconBg, {backgroundColor: color + '40'}]}  >
-
+            <View style={[styles.iconBg, {backgroundColor: color + '40', alignItems: 'center', justifyContent: 'center'}]}  >
+                <Ionicons style={{color: 'white', fontSize: 25}} name={icon} />
             </View>
             <View style={{transform: [{translateY: 8}]}} >
                 <Text style={[styles.amount, {paddingLeft: (amount % 10 == amount) ? 10 : 0 }]}>{amount}</Text>
@@ -18,7 +19,7 @@ const SummaryCard = ({color, percent, name, amount, unit}) => {
             <Text style={styles.text} >{name}</Text>
         </View>
         <View style={styles.btm2} >
-            <ProgressBar percent={percent} color={color} />
+            <ProgressBar percent={Math.round(percent)} color={color} />
         </View>
     </View>
   )
@@ -56,6 +57,7 @@ const styles = StyleSheet.create({
         height: 60,
         justifyContent: 'flex-end',
         paddingBottom: 6,
+        overflow: 'hidden'
         
     },
     iconBg:{

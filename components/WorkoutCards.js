@@ -46,8 +46,8 @@ const WorkoutCard = ({ width, text, height = '100%', gradColors, iconColor }) =>
           transform: [{ scale: scaleValue }],
         },
       ]}
-      onPressIn={handlePressIn}
-      onPressOut={handlePressOut}
+      // onPressIn={handlePressIn}
+      // onPressOut={handlePressOut}
       onPress={() => nav.navigate('WorkoutScreen', {name: text})}
     >
       <View>

@@ -4,7 +4,7 @@ import MapView, { Marker, Polyline } from 'react-native-maps';
 import * as Location from 'expo-location';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import { PROVIDER_GOOGLE } from 'react-native-maps'
 
 const WorkoutMap = () => {
     const [location, setLocation] = useState(null);
@@ -158,6 +158,7 @@ const WorkoutMap = () => {
     return (
         <View style={styles.container}>
             <MapView
+                provider={PROVIDER_GOOGLE}
                 ref={mapRef}
                 style={styles.map}
                 customMapStyle={darkMapStyle}

@@ -18,6 +18,8 @@ import WaterNav from './WaterNav';
 import { MainHeader } from '../../components/misc/header';
 import About from './about';
 import AddMeal from './AddMeal';
+import FoodNav from './FoodNav';
+import SocialNav from './socialNavigator';
 
 Drawer = createDrawerNavigator()
 
@@ -33,14 +35,14 @@ const CustomDrawerContent = (props) => {
   return (
     <DrawerContentScrollView {...props} contentContainerStyle={{flexDirection: 'column',justifyContent: 'space-between', height: '100%', backgroundColor: '#000'}}>
       
-      <TouchableOpacity style={styles.navProfile} onPress={() => {console.log('profile'); Logout();}}>
+      <View style={styles.navProfile}>
         <View style={styles.profileWrap}>
         <Image style={styles.navProfilePic} source={require('../../assets/user.png')} />
         <View style={{marginRight: 5}}>
         <Text style={{fontFamily: 'MontserratMD', fontSize: 18, color: '#fff'}}>{props.name}</Text>
         </View>
         </View>
-      </TouchableOpacity>
+      </View>
       <View style={{flex: 1,marginTop: 40,}}>
         <DrawerItemList {...props} />
       </View>
@@ -102,16 +104,23 @@ const DrawerNav = () => {
             <Ionicons name="water" size={size} color={focused ? '#FF0177' : '#ffffff45'} style={{marginLeft: 5}} />
           ),
         }} />
-      <Drawer.Screen name="Add Meal" component={AddMeal} options={{
+      <Drawer.Screen name="Add Meal" component={FoodNav} options={{
           headerShown: false,
           header: (props) => <MainHeader {...props} title={<Text style={{fontSize: 20, fontFamily: 'SFPro'}} >Add Meal</Text> } />,
           drawerIcon: ({ focused, size }) => (
             <Ionicons name="fast-food" size={size} color={focused ? '#FF0177' : '#ffffff45'} style={{marginLeft: 5}} />
           ),
         }} />
+      <Drawer.Screen name="Friends" component={SocialNav} options={{
+          headerShown: false,
+          header: (props) => <MainHeader {...props} title={<Text style={{fontSize: 20, fontFamily: 'SFPro'}} >Social</Text> } />,
+          drawerIcon: ({ focused, size }) => (
+            <Ionicons name="people-sharp" size={size} color={focused ? '#FF0177' : '#ffffff45'} style={{marginLeft: 5}} />
+          ),
+        }} />
       <Drawer.Screen name="About" component={About} options={{
-          headerTitle: 'About',
-          header: (props) => <MainHeader {...props} title={<Text style={{fontSize: 20}} >My Class</Text> } />,
+          headerShown: false,
+          header: (props) => <MainHeader {...props} title={<Text style={{fontSize: 20}} ></Text> } />,
           drawerIcon: ({ focused, size }) => (
             <MaterialIcons name="info" size={size} color={focused ? '#FF0177' : '#ffffff45'} style={{marginLeft: 5}} />
           ),

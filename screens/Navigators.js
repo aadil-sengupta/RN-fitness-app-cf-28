@@ -32,9 +32,9 @@ export const MainStack = () => {
         screenOptions={{
           headerShown: false
         }}>
-          
           <Stack.Screen name="DrawerNav" component={DrawerNav} />
           <Stack.Screen name="Onboarding" component={Onboarding} />
+          
 
           <Stack.Screen name="Breathe" component={Breathe} />
           <Stack.Screen name="Reflect" component={Reflect} />
